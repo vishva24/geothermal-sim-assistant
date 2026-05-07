@@ -1,0 +1,527 @@
+{
+  "generated_at": "2026-05-07T20:51:24.164580+00:00",
+  "model": "llama-3.1-8b-instant",
+  "thresholds": {
+    "param_tolerance_pct": 1.0,
+    "sim_tight_tolerance_pct": 2.0,
+    "sim_loose_tolerance_pct": 5.0,
+    "pass_threshold_pct": 80.0
+  },
+  "aggregate": {
+    "total_tests": 10,
+    "passed": 10,
+    "failed": 0,
+    "avg_param_extraction_score": 1.0,
+    "avg_simulation_correctness_score": 1.0,
+    "avg_latency_total_s": 28.36,
+    "avg_latency_pandapipes_s": 0.156,
+    "avg_latency_llm_estimated_s": 28.205
+  },
+  "test_results": [
+    {
+      "id": "tc_001",
+      "user_prompt": "Run a simulation with 3 consumers at 90\u00c2\u00b0C supply and 60\u00c2\u00b0C return",
+      "expected_tool": "run_heating_network_simulation",
+      "tool_selected": "run_heating_network_simulation",
+      "tool_correct": true,
+      "param_extraction_score": 1.0,
+      "param_details": {
+        "supply_temp_c": {
+          "expected": 90.0,
+          "actual": 90,
+          "correct": true
+        },
+        "return_temp_c": {
+          "expected": 60.0,
+          "actual": 60,
+          "correct": true
+        },
+        "n_consumers": {
+          "expected": 3,
+          "actual": 3,
+          "correct": true
+        }
+      },
+      "simulation_correctness_score": 1.0,
+      "simulation_details": {
+        "total_heat_output_kw": {
+          "expected": 2.02,
+          "actual": 2.02,
+          "score": 1.0
+        },
+        "supply_temp_c": {
+          "expected": 90.0,
+          "actual": 90.0,
+          "match": true
+        },
+        "return_temp_c": {
+          "expected": 89.68,
+          "actual": 89.68,
+          "match": true
+        }
+      },
+      "latency": {
+        "total_s": 1.175,
+        "pandapipes_s": 0.123,
+        "llm_estimated_s": 1.052
+      },
+      "passed": true
+    },
+    {
+      "id": "tc_002",
+      "user_prompt": "What is the heat output with 5 consumers and 0.8 kg/s mass flow?",
+      "expected_tool": "run_heating_network_simulation",
+      "tool_selected": "run_heating_network_simulation",
+      "tool_correct": true,
+      "param_extraction_score": 1.0,
+      "param_details": {
+        "n_consumers": {
+          "expected": 5,
+          "actual": 5,
+          "correct": true
+        },
+        "consumer_mass_flow_kg_s": {
+          "expected": 0.8,
+          "actual": 0.8,
+          "correct": true
+        }
+      },
+      "simulation_correctness_score": 1.0,
+      "simulation_details": {
+        "total_heat_output_kw": {
+          "expected": 6.04,
+          "actual": 6.04,
+          "score": 1.0
+        },
+        "supply_temp_c": {
+          "expected": 90.0,
+          "actual": 90.0,
+          "match": true
+        },
+        "return_temp_c": {
+          "expected": 89.64,
+          "actual": 89.64,
+          "match": true
+        }
+      },
+      "latency": {
+        "total_s": 7.936,
+        "pandapipes_s": 0.181,
+        "llm_estimated_s": 7.755
+      },
+      "passed": true
+    },
+    {
+      "id": "tc_003",
+      "user_prompt": "Simulate a network with 80\u00c2\u00b0C supply, 50\u00c2\u00b0C return, pipe length 1km, 3 consumers",
+      "expected_tool": "run_heating_network_simulation",
+      "tool_selected": "run_heating_network_simulation",
+      "tool_correct": true,
+      "param_extraction_score": 1.0,
+      "param_details": {
+        "supply_temp_c": {
+          "expected": 80.0,
+          "actual": 80,
+          "correct": true
+        },
+        "return_temp_c": {
+          "expected": 50.0,
+          "actual": 50,
+          "correct": true
+        },
+        "pipe_length_km": {
+          "expected": 1.0,
+          "actual": 1,
+          "correct": true
+        },
+        "n_consumers": {
+          "expected": 3,
+          "actual": 3,
+          "correct": true
+        }
+      },
+      "simulation_correctness_score": 1.0,
+      "simulation_details": {
+        "total_heat_output_kw": {
+          "expected": 4.55,
+          "actual": 4.55,
+          "score": 1.0
+        },
+        "supply_temp_c": {
+          "expected": 80.0,
+          "actual": 80.0,
+          "match": true
+        },
+        "return_temp_c": {
+          "expected": 79.28,
+          "actual": 79.28,
+          "match": true
+        }
+      },
+      "latency": {
+        "total_s": 34.307,
+        "pandapipes_s": 0.128,
+        "llm_estimated_s": 34.179
+      },
+      "passed": true
+    },
+    {
+      "id": "tc_004",
+      "user_prompt": "Compare 90/60\u00c2\u00b0C vs 70/40\u00c2\u00b0C scenarios with 3 consumers",
+      "expected_tool": "compare_scenarios",
+      "tool_selected": "compare_scenarios",
+      "tool_correct": true,
+      "param_extraction_score": 1.0,
+      "param_details": {
+        "scenario_a_supply_temp_c": {
+          "expected": 90.0,
+          "actual": 90,
+          "correct": true
+        },
+        "scenario_a_return_temp_c": {
+          "expected": 60.0,
+          "actual": 60,
+          "correct": true
+        },
+        "scenario_b_supply_temp_c": {
+          "expected": 70.0,
+          "actual": 70,
+          "correct": true
+        },
+        "scenario_b_return_temp_c": {
+          "expected": 40.0,
+          "actual": 40,
+          "correct": true
+        },
+        "n_consumers": {
+          "expected": 3,
+          "actual": 3,
+          "correct": true
+        }
+      },
+      "simulation_correctness_score": 1.0,
+      "simulation_details": {
+        "scenario_A_heat": {
+          "expected": 2.02,
+          "actual": 2.02,
+          "score": 1.0
+        },
+        "scenario_B_heat": {
+          "expected": 1.51,
+          "actual": 1.51,
+          "score": 1.0
+        }
+      },
+      "latency": {
+        "total_s": 34.278,
+        "pandapipes_s": 0.217,
+        "llm_estimated_s": 34.061
+      },
+      "passed": true
+    },
+    {
+      "id": "tc_005",
+      "user_prompt": "Run simulation with 4 consumers, 6 bar pressure, 0.12m pipe diameter",
+      "expected_tool": "run_heating_network_simulation",
+      "tool_selected": "run_heating_network_simulation",
+      "tool_correct": true,
+      "param_extraction_score": 1.0,
+      "param_details": {
+        "n_consumers": {
+          "expected": 4,
+          "actual": 4,
+          "correct": true
+        },
+        "geothermal_pressure_bar": {
+          "expected": 6.0,
+          "actual": 6,
+          "correct": true
+        },
+        "pipe_diameter_m": {
+          "expected": 0.12,
+          "actual": 0.12,
+          "correct": true
+        }
+      },
+      "simulation_correctness_score": 1.0,
+      "simulation_details": {
+        "total_heat_output_kw": {
+          "expected": 2.09,
+          "actual": 2.09,
+          "score": 1.0
+        },
+        "supply_temp_c": {
+          "expected": 90.0,
+          "actual": 90.0,
+          "match": true
+        },
+        "return_temp_c": {
+          "expected": 89.75,
+          "actual": 89.75,
+          "match": true
+        }
+      },
+      "latency": {
+        "total_s": 34.22,
+        "pandapipes_s": 0.132,
+        "llm_estimated_s": 34.088
+      },
+      "passed": true
+    },
+    {
+      "id": "tc_006",
+      "user_prompt": "Simulate 2 consumers with 95\u00c2\u00b0C supply and 65\u00c2\u00b0C return at 8 bar pressure",
+      "expected_tool": "run_heating_network_simulation",
+      "tool_selected": "run_heating_network_simulation",
+      "tool_correct": true,
+      "param_extraction_score": 1.0,
+      "param_details": {
+        "supply_temp_c": {
+          "expected": 95.0,
+          "actual": 95,
+          "correct": true
+        },
+        "return_temp_c": {
+          "expected": 65.0,
+          "actual": 65,
+          "correct": true
+        },
+        "n_consumers": {
+          "expected": 2,
+          "actual": 2,
+          "correct": true
+        },
+        "geothermal_pressure_bar": {
+          "expected": 8.0,
+          "actual": 8,
+          "correct": true
+        }
+      },
+      "simulation_correctness_score": 1.0,
+      "simulation_details": {
+        "total_heat_output_kw": {
+          "expected": 1.42,
+          "actual": 1.42,
+          "score": 1.0
+        },
+        "supply_temp_c": {
+          "expected": 95.0,
+          "actual": 95.0,
+          "match": true
+        },
+        "return_temp_c": {
+          "expected": 94.66,
+          "actual": 94.66,
+          "match": true
+        }
+      },
+      "latency": {
+        "total_s": 35.144,
+        "pandapipes_s": 0.092,
+        "llm_estimated_s": 35.052
+      },
+      "passed": true
+    },
+    {
+      "id": "tc_007",
+      "user_prompt": "What happens with 6 consumers at low mass flow of 0.3 kg/s?",
+      "expected_tool": "run_heating_network_simulation",
+      "tool_selected": "run_heating_network_simulation",
+      "tool_correct": true,
+      "param_extraction_score": 1.0,
+      "param_details": {
+        "n_consumers": {
+          "expected": 6,
+          "actual": 6,
+          "correct": true
+        },
+        "consumer_mass_flow_kg_s": {
+          "expected": 0.3,
+          "actual": 0.3,
+          "correct": true
+        }
+      },
+      "simulation_correctness_score": 1.0,
+      "simulation_details": {
+        "total_heat_output_kw": {
+          "expected": 2.87,
+          "actual": 2.87,
+          "score": 1.0
+        },
+        "supply_temp_c": {
+          "expected": 90.0,
+          "actual": 90.0,
+          "match": true
+        },
+        "return_temp_c": {
+          "expected": 89.62,
+          "actual": 89.62,
+          "match": true
+        }
+      },
+      "latency": {
+        "total_s": 34.235,
+        "pandapipes_s": 0.182,
+        "llm_estimated_s": 34.054
+      },
+      "passed": true
+    },
+    {
+      "id": "tc_008",
+      "user_prompt": "Compare high temperature 95/65\u00c2\u00b0C versus low temperature 60/35\u00c2\u00b0C with 4 consumers and 0.6 kg/s flow",
+      "expected_tool": "compare_scenarios",
+      "tool_selected": "compare_scenarios",
+      "tool_correct": true,
+      "param_extraction_score": 1.0,
+      "param_details": {
+        "scenario_a_supply_temp_c": {
+          "expected": 95.0,
+          "actual": 95,
+          "correct": true
+        },
+        "scenario_a_return_temp_c": {
+          "expected": 65.0,
+          "actual": 65,
+          "correct": true
+        },
+        "scenario_b_supply_temp_c": {
+          "expected": 60.0,
+          "actual": 60,
+          "correct": true
+        },
+        "scenario_b_return_temp_c": {
+          "expected": 35.0,
+          "actual": 35,
+          "correct": true
+        },
+        "n_consumers": {
+          "expected": 4,
+          "actual": 4,
+          "correct": true
+        },
+        "consumer_mass_flow_kg_s": {
+          "expected": 0.6,
+          "actual": 0.6,
+          "correct": true
+        }
+      },
+      "simulation_correctness_score": 1.0,
+      "simulation_details": {
+        "scenario_A_heat": {
+          "expected": 3.6,
+          "actual": 3.6,
+          "score": 1.0
+        },
+        "scenario_B_heat": {
+          "expected": 2.11,
+          "actual": 2.11,
+          "score": 1.0
+        }
+      },
+      "latency": {
+        "total_s": 32.067,
+        "pandapipes_s": 0.238,
+        "llm_estimated_s": 31.829
+      },
+      "passed": true
+    },
+    {
+      "id": "tc_009",
+      "user_prompt": "Run a simulation with 0.15m pipe diameter and 2km pipe length",
+      "expected_tool": "run_heating_network_simulation",
+      "tool_selected": "run_heating_network_simulation",
+      "tool_correct": true,
+      "param_extraction_score": 1.0,
+      "param_details": {
+        "pipe_diameter_m": {
+          "expected": 0.15,
+          "actual": 0.15,
+          "correct": true
+        },
+        "pipe_length_km": {
+          "expected": 2.0,
+          "actual": 2,
+          "correct": true
+        }
+      },
+      "simulation_correctness_score": 1.0,
+      "simulation_details": {
+        "total_heat_output_kw": {
+          "expected": 7.2,
+          "actual": 7.2,
+          "score": 1.0
+        },
+        "supply_temp_c": {
+          "expected": 90.0,
+          "actual": 90.0,
+          "match": true
+        },
+        "return_temp_c": {
+          "expected": 88.85,
+          "actual": 88.85,
+          "match": true
+        }
+      },
+      "latency": {
+        "total_s": 36.017,
+        "pandapipes_s": 0.11,
+        "llm_estimated_s": 35.908
+      },
+      "passed": true
+    },
+    {
+      "id": "tc_010",
+      "user_prompt": "Simulate 7 consumers with 85\u00c2\u00b0C supply, 55\u00c2\u00b0C return and 1.5km pipes",
+      "expected_tool": "run_heating_network_simulation",
+      "tool_selected": "run_heating_network_simulation",
+      "tool_correct": true,
+      "param_extraction_score": 1.0,
+      "param_details": {
+        "supply_temp_c": {
+          "expected": 85.0,
+          "actual": 85,
+          "correct": true
+        },
+        "return_temp_c": {
+          "expected": 55.0,
+          "actual": 55,
+          "correct": true
+        },
+        "n_consumers": {
+          "expected": 7,
+          "actual": 7,
+          "correct": true
+        },
+        "pipe_length_km": {
+          "expected": 1.5,
+          "actual": 1.5,
+          "correct": true
+        }
+      },
+      "simulation_correctness_score": 1.0,
+      "simulation_details": {
+        "total_heat_output_kw": {
+          "expected": 22.78,
+          "actual": 22.78,
+          "score": 1.0
+        },
+        "supply_temp_c": {
+          "expected": 85.0,
+          "actual": 85.0,
+          "match": true
+        },
+        "return_temp_c": {
+          "expected": 83.45,
+          "actual": 83.45,
+          "match": true
+        }
+      },
+      "latency": {
+        "total_s": 34.225,
+        "pandapipes_s": 0.158,
+        "llm_estimated_s": 34.067
+      },
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,195 @@
+[
+  {
+    "id": "tc_001",
+    "user_prompt": "Run a simulation with 3 consumers at 90°C supply and 60°C return",
+    "expected_tool": "run_heating_network_simulation",
+    "expected_params": {
+      "supply_temp_c": 90.0,
+      "return_temp_c": 60.0,
+      "n_consumers": 3
+    },
+    "ground_truth": {
+      "status": "converged",
+      "total_heat_output_kw": 2.02,
+      "supply_temp_c": 90.0,
+      "return_temp_c": 89.68,
+      "mass_flow_kg_s": 1.5
+    }
+  },
+  {
+    "id": "tc_002",
+    "user_prompt": "What is the heat output with 5 consumers and 0.8 kg/s mass flow?",
+    "expected_tool": "run_heating_network_simulation",
+    "expected_params": {
+      "n_consumers": 5,
+      "consumer_mass_flow_kg_s": 0.8
+    },
+    "ground_truth": {
+      "status": "converged",
+      "total_heat_output_kw": 6.04,
+      "supply_temp_c": 90.0,
+      "return_temp_c": 89.64,
+      "mass_flow_kg_s": 4.0
+    }
+  },
+  {
+    "id": "tc_003",
+    "user_prompt": "Simulate a network with 80°C supply, 50°C return, pipe length 1km, 3 consumers",
+    "expected_tool": "run_heating_network_simulation",
+    "expected_params": {
+      "supply_temp_c": 80.0,
+      "return_temp_c": 50.0,
+      "pipe_length_km": 1.0,
+      "n_consumers": 3
+    },
+    "ground_truth": {
+      "status": "converged",
+      "total_heat_output_kw": 4.55,
+      "supply_temp_c": 80.0,
+      "return_temp_c": 79.28,
+      "mass_flow_kg_s": 1.5
+    }
+  },
+  {
+    "id": "tc_004",
+    "user_prompt": "Compare 90/60°C vs 70/40°C scenarios with 3 consumers",
+    "expected_tool": "compare_scenarios",
+    "expected_params": {
+      "scenario_a_supply_temp_c": 90.0,
+      "scenario_a_return_temp_c": 60.0,
+      "scenario_b_supply_temp_c": 70.0,
+      "scenario_b_return_temp_c": 40.0,
+      "n_consumers": 3
+    },
+    "ground_truth": {
+      "scenario_a": {
+        "status": "converged",
+        "total_heat_output_kw": 2.02,
+        "supply_temp_c": 90.0,
+        "return_temp_c": 89.68,
+        "mass_flow_kg_s": 1.5
+      },
+      "scenario_b": {
+        "status": "converged",
+        "total_heat_output_kw": 1.51,
+        "supply_temp_c": 70.0,
+        "return_temp_c": 69.76,
+        "mass_flow_kg_s": 1.5
+      }
+    }
+  },
+  {
+    "id": "tc_005",
+    "user_prompt": "Run simulation with 4 consumers, 6 bar pressure, 0.12m pipe diameter",
+    "expected_tool": "run_heating_network_simulation",
+    "expected_params": {
+      "n_consumers": 4,
+      "geothermal_pressure_bar": 6.0,
+      "pipe_diameter_m": 0.12
+    },
+    "ground_truth": {
+      "status": "converged",
+      "total_heat_output_kw": 2.09,
+      "supply_temp_c": 90.0,
+      "return_temp_c": 89.75,
+      "mass_flow_kg_s": 2.0
+    }
+  },
+  {
+    "id": "tc_006",
+    "user_prompt": "Simulate 2 consumers with 95°C supply and 65°C return at 8 bar pressure",
+    "expected_tool": "run_heating_network_simulation",
+    "expected_params": {
+      "supply_temp_c": 95.0,
+      "return_temp_c": 65.0,
+      "n_consumers": 2,
+      "geothermal_pressure_bar": 8.0
+    },
+    "ground_truth": {
+      "status": "converged",
+      "total_heat_output_kw": 1.42,
+      "supply_temp_c": 95.0,
+      "return_temp_c": 94.66,
+      "mass_flow_kg_s": 1.0
+    }
+  },
+  {
+    "id": "tc_007",
+    "user_prompt": "What happens with 6 consumers at low mass flow of 0.3 kg/s?",
+    "expected_tool": "run_heating_network_simulation",
+    "expected_params": {
+      "n_consumers": 6,
+      "consumer_mass_flow_kg_s": 0.3
+    },
+    "ground_truth": {
+      "status": "converged",
+      "total_heat_output_kw": 2.87,
+      "supply_temp_c": 90.0,
+      "return_temp_c": 89.62,
+      "mass_flow_kg_s": 1.8
+    }
+  },
+  {
+    "id": "tc_008",
+    "user_prompt": "Compare high temperature 95/65°C versus low temperature 60/35°C with 4 consumers and 0.6 kg/s flow",
+    "expected_tool": "compare_scenarios",
+    "expected_params": {
+      "scenario_a_supply_temp_c": 95.0,
+      "scenario_a_return_temp_c": 65.0,
+      "scenario_b_supply_temp_c": 60.0,
+      "scenario_b_return_temp_c": 35.0,
+      "n_consumers": 4,
+      "consumer_mass_flow_kg_s": 0.6
+    },
+    "ground_truth": {
+      "scenario_a": {
+        "status": "converged",
+        "total_heat_output_kw": 3.6,
+        "supply_temp_c": 95.0,
+        "return_temp_c": 94.64,
+        "mass_flow_kg_s": 2.4
+      },
+      "scenario_b": {
+        "status": "converged",
+        "total_heat_output_kw": 2.11,
+        "supply_temp_c": 60.0,
+        "return_temp_c": 59.79,
+        "mass_flow_kg_s": 2.4
+      }
+    }
+  },
+  {
+    "id": "tc_009",
+    "user_prompt": "Run a simulation with 0.15m pipe diameter and 2km pipe length",
+    "expected_tool": "run_heating_network_simulation",
+    "expected_params": {
+      "pipe_diameter_m": 0.15,
+      "pipe_length_km": 2.0
+    },
+    "ground_truth": {
+      "status": "converged",
+      "total_heat_output_kw": 7.2,
+      "supply_temp_c": 90.0,
+      "return_temp_c": 88.85,
+      "mass_flow_kg_s": 1.5
+    }
+  },
+  {
+    "id": "tc_010",
+    "user_prompt": "Simulate 7 consumers with 85°C supply, 55°C return and 1.5km pipes",
+    "expected_tool": "run_heating_network_simulation",
+    "expected_params": {
+      "supply_temp_c": 85.0,
+      "return_temp_c": 55.0,
+      "n_consumers": 7,
+      "pipe_length_km": 1.5
+    },
+    "ground_truth": {
+      "status": "converged",
+      "total_heat_output_kw": 22.78,
+      "supply_temp_c": 85.0,
+      "return_temp_c": 83.45,
+      "mass_flow_kg_s": 3.5
+    }
+  }
+]
