@@ -24,17 +24,17 @@ User (Natural Language)
 └────────┬────────────┘
          │
          ▼
-┌─────────────────────────────────┐
-│        LangGraph Agent          │
-│                                 │
-│  ┌──────────┐  ┌─────────────┐  │
-│  │ LLM Node │→ │ Tool Router │  │
-│  └──────────┘  └──────┬──────┘  │
-│                        │        │
-│         ┌──────────────┼──────────────┐
-│         ▼              ▼              ▼
-│  run_simulation  compare_scenarios  explain_concept
-└─────────────────────────────────┘
+┌───────────────────────────────────────────────────────┐
+│        LangGraph Agent                                │
+│                                                       │
+│  ┌──────────┐  ┌─────────────┐                        │
+│  │ LLM Node │→ │ Tool Router │                        │
+│  └──────────┘  └──────┬──────┘                        │
+│                        │                              │
+│         ┌──────────────┼──────────────┐               │
+│         ▼              ▼              ▼               │
+│  run_simulation  compare_scenarios  explain_concept   │
+└───────────────────────────────────────────────────────┘
          │
          ▼
 ┌─────────────────────┐
@@ -68,11 +68,11 @@ The simulated network represents a simplified **deep geothermal district heating
         ▼
 [Main Supply Pipe]
         │
-   ┌────┴────┐
-   │         │
-[Consumer 1] [Consumer 2] ... [Consumer N]
-   │         │
-   └────┬────┘
+   ┌────┴───────────────────────────────────────────────┐
+   │                                                    │
+   │     [Consumer 1] [Consumer 2] ... [Consumer N]      │
+   │                                                    │
+   └────┬───────────────────────────────────────────────┘
         ▼
 [Return Header] → back to geothermal source
 ```
