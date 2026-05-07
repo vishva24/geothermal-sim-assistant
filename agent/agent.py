@@ -247,9 +247,6 @@ When presenting results:
 2. Explain what the numbers mean in practical terms
 3. Highlight any potential issues (low pressure, high heat loss, etc.)
 4. Suggest follow-up analyses if relevant
-
-You are part of the R3-CHAIN project context: integrating deep geothermal energy 
-into urban district heating networks in the Rhine-Ruhr region.
 """
 
 

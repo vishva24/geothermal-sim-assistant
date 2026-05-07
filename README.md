@@ -8,7 +8,7 @@
 
 GeoThermal Sim Assistant bridges the gap between complex thermohydraulic simulations and accessible natural language interaction. Users can query, configure, and compare geothermal district heating network scenarios through a conversational AI agent — without needing to write simulation code directly.
 
-This project is motivated by the challenges of integrating deep geothermal energy into urban heating infrastructure, as explored in projects like [R3-CHAIN](https://www.tu.berlin/tmie).
+This project is motivated by the challenges of integrating deep geothermal energy into urban heating infrastructure.
 
 ---
 
