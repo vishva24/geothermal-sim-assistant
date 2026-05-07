@@ -138,7 +138,7 @@ python -m benchmark.report
 ### 1. Clone & install
 
 ```bash
-git clone https://github.com/<your-username>/geothermal-sim-assistant.git
+git clone https://github.com/vishva24/geothermal-sim-assistant.git
 cd geothermal-sim-assistant
 pip install -r requirements.txt
 ```
