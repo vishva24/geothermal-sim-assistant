@@ -229,17 +229,6 @@ print(f"Pressure drop: {result['pressure_drop_bar']} bar")
 
 ---
 
-## Roadmap
-
-- [ ] Time-series simulation (quasi-stationary load profiles)
-- [ ] Integration with PyDoublet for geological subsurface modeling
-- [ ] Sensitivity analysis tooling (parameter sweep + auto-visualization)
-- [ ] Extended network topologies (branched, meshed, ring networks)
-- [ ] Export simulation results to pandapipes JSON format
-- [ ] Voice input interface (Web Speech API)
-
----
-
 ## Tech Stack
 
 | Layer | Technology |
@@ -255,7 +244,12 @@ print(f"Pressure drop: {result['pressure_drop_bar']} bar")
 
 ## Context
 
-This project was developed as a practical exploration of LLM-powered interfaces for energy system simulation tools — directly relevant to the **R3-CHAIN** project at TU Berlin (Integration of Deep Geothermal Energy into Urban Heating Networks), which aims to extend pandapipes with a geothermal module and an AI-based user framework.
+This project explores the integration of LLM-based agentic interfaces
+with domain-specific simulation tools — specifically thermohydraulic
+modeling of district heating networks. It demonstrates how natural
+language interaction can make complex energy system simulations
+accessible to planners, engineers, and researchers without requiring
+direct programming knowledge.
 
 ---
 
