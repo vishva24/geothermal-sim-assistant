@@ -131,6 +131,30 @@ python -m benchmark.evaluator
 python -m benchmark.report
 ```
 
+### Experiment Tracking
+
+Each evaluator run is automatically logged to **MLflow** and optionally uploaded to **AWS S3**:
+
+- MLflow experiment `geosim-agent-eval` — logs model name, tolerance thresholds, aggregate metrics, and per-test scores as step-indexed series so runs can be compared over time
+- S3 artefacts uploaded to a timestamped folder (`geosim-eval/YYYYMMDD_HHMMSS/`) so every run is preserved without overwriting previous results
+
+```bash
+# View all runs and compare metrics across evaluations
+mlflow ui        # opens http://localhost:5000
+
+# Upload latest results to S3 without re-running the test suite
+python -m benchmark.upload_to_s3
+```
+
+Set the following variables in `.env` to enable S3 upload (MLflow works without any credentials):
+
+```
+AWS_ACCESS_KEY_ID=...
+AWS_SECRET_ACCESS_KEY=...
+AWS_DEFAULT_REGION=eu-north-1
+S3_BUCKET_NAME=your-bucket-name
+```
+
 ---
 
 ## Quick Start
@@ -239,6 +263,8 @@ print(f"Pressure drop: {result['pressure_drop_bar']} bar")
 | Backend | FastAPI |
 | UI | Chainlit |
 | Data | pandas, numpy |
+| Experiment Tracking | MLflow |
+| Artefact Storage | AWS S3 (boto3) |
 
 ---
 

@@ -37,7 +37,8 @@ from simulation.network import build_district_heating_network, run_simulation
 
 BENCHMARK_DIR = Path(__file__).parent
 TEST_CASES_PATH = BENCHMARK_DIR / "test_cases.json"
-REPORT_PATH = BENCHMARK_DIR / "eval_report.json"
+REPORT_PATH    = BENCHMARK_DIR / "eval_report.json"
+CHART_PATH     = BENCHMARK_DIR / "eval_chart.png"
 
 # ── Tolerances ────────────────────────────────────────────────────────────────
 
@@ -360,8 +361,88 @@ def evaluate() -> None:
     print(f"  Avg total latency    : {aggregate['avg_latency_total_s']:.2f}s")
     print(f"  Avg pandapipes time  : {aggregate['avg_latency_pandapipes_s']:.3f}s")
     print(f"  Avg LLM est. time    : {aggregate['avg_latency_llm_estimated_s']:.2f}s")
-    print(f"\n  Report → {REPORT_PATH}")
+    print(f"\n  Report -> {REPORT_PATH}")
     print("=" * 60)
+
+    # ── Optional integrations ─────────────────────────────────────────────────
+    print()
+    _log_to_mlflow(report, per_test)
+    _upload_to_s3()
+
+
+# ── MLflow logging ────────────────────────────────────────────────────────────
+
+def _log_to_mlflow(report: dict, per_test: list[dict]) -> None:
+    """Log aggregate metrics, per-test step metrics, and the JSON report artifact."""
+    try:
+        import mlflow  # noqa: PLC0415
+    except ImportError:
+        print("  [mlflow] not installed — skipping experiment tracking.")
+        return
+
+    agg = report["aggregate"]
+    mlflow.set_experiment("geosim-agent-eval")
+
+    with mlflow.start_run():
+        # Thresholds / config as params
+        for k, v in report["thresholds"].items():
+            mlflow.log_param(k, v)
+        mlflow.log_param("model", report["model"])
+        mlflow.log_param("total_tests", agg["total_tests"])
+
+        # Aggregate metrics
+        mlflow.log_metric("pass_rate", agg["passed"] / agg["total_tests"])
+        mlflow.log_metric("avg_param_extraction_score", agg["avg_param_extraction_score"])
+        mlflow.log_metric("avg_simulation_correctness_score", agg["avg_simulation_correctness_score"])
+        mlflow.log_metric("avg_latency_total_s", agg["avg_latency_total_s"])
+        mlflow.log_metric("avg_latency_pandapipes_s", agg["avg_latency_pandapipes_s"])
+        mlflow.log_metric("avg_latency_llm_estimated_s", agg["avg_latency_llm_estimated_s"])
+
+        # Per-test metrics logged as steps (step = test index)
+        for i, r in enumerate(per_test):
+            mlflow.log_metric("param_extraction_score", r["param_extraction_score"], step=i)
+            mlflow.log_metric("simulation_correctness_score", r["simulation_correctness_score"], step=i)
+            mlflow.log_metric("latency_total_s", r["latency"]["total_s"], step=i)
+
+        # Artifacts
+        mlflow.log_artifact(str(REPORT_PATH))
+        if CHART_PATH.exists():
+            mlflow.log_artifact(str(CHART_PATH))
+
+        run_id = mlflow.active_run().info.run_id
+        print(f"  [mlflow] run logged → run_id: {run_id}")
+
+
+# ── AWS S3 upload ─────────────────────────────────────────────────────────────
+
+def _upload_to_s3() -> None:
+    """Upload the JSON report and chart PNG to S3 if configured."""
+    bucket = os.getenv("S3_BUCKET_NAME")
+    if not bucket:
+        print("  [s3] S3_BUCKET_NAME not set — skipping upload.")
+        return
+
+    try:
+        import boto3  # noqa: PLC0415
+        from botocore.exceptions import BotoCoreError, ClientError  # noqa: PLC0415
+    except ImportError:
+        print("  [s3] boto3 not installed — skipping upload.")
+        return
+
+    s3 = boto3.client("s3")
+    files_to_upload = [
+        (REPORT_PATH, "geosim-eval/eval_report.json"),
+        (CHART_PATH, "geosim-eval/eval_chart.png"),
+    ]
+
+    for local_path, s3_key in files_to_upload:
+        if not local_path.exists():
+            continue
+        try:
+            s3.upload_file(str(local_path), bucket, s3_key)
+            print(f"  [s3] uploaded s3://{bucket}/{s3_key}")
+        except (BotoCoreError, ClientError) as exc:
+            print(f"  [s3] upload failed for {local_path.name}: {exc}")
 
 
 if __name__ == "__main__":

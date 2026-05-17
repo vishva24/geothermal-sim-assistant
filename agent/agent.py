@@ -263,7 +263,22 @@ def create_agent(model_name: str = "llama-3.1-8b-instant", groq_api_key: str = N
     # ── Node: call LLM ──
     def call_llm(state: AgentState) -> dict:
         messages = [SystemMessage(content=SYSTEM_PROMPT)] + state["messages"]
-        response = llm.invoke(messages)
+        try:
+            response = llm.invoke(messages)
+        except Exception as e:
+            error_text = str(e)
+            # Groq returns 400 when the model mis-formats a tool call (common on
+            # smaller models). Surface it as a plain AI message so the graph can
+            # terminate cleanly rather than crashing the app.
+            if "tool_use_failed" in error_text or "400" in error_text:
+                response = AIMessage(
+                    content=(
+                        "I encountered an issue formatting my response. "
+                        "Please try rephrasing your question."
+                    )
+                )
+            else:
+                raise
         return {"messages": [response]}
 
     # ── Node: execute tools ──

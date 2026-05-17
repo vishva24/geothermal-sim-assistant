@@ -54,15 +54,19 @@ async def on_message(message: cl.Message):
 
     # Show thinking indicator
     async with cl.Step(name="🔧 Running simulation...", type="tool") as step:
-        # Build messages
         messages = history + [HumanMessage(content=message.content)]
-
-        # Run agent
-        result = agent.invoke({
-            "messages": messages,
-            "simulation_results": [],
-            "current_params": {},
-        })
+        try:
+            result = agent.invoke({
+                "messages": messages,
+                "simulation_results": [],
+                "current_params": {},
+            })
+        except Exception as e:
+            step.output = f"Error: {e}"
+            await cl.Message(
+                content="Something went wrong calling the model. Please try again."
+            ).send()
+            return
 
         tools_called = [r["tool"] for r in result.get("simulation_results", [])]
         if tools_called:
@@ -74,7 +78,7 @@ async def on_message(message: cl.Message):
     final_message = result["messages"][-1]
     history.append(HumanMessage(content=message.content))
     history.append(AIMessage(content=final_message.content))
-    cl.user_session.set("history", history[-10:])  # keep last 5 turns
+    cl.user_session.set("history", history[-10:])
 
     # Send response
     await cl.Message(content=final_message.content).send()
